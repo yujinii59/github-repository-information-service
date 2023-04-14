@@ -14,6 +14,9 @@ async def get_repository_info(username, repo):
                     repository(owner: "{username}", name: "{repo}") {{
                         name
                         description
+                        issues(states:OPEN) {{
+                                totalCount
+                        }}
                     }}
                 }}
             """
