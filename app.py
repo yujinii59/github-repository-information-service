@@ -1,27 +1,14 @@
 from flask import Flask
-from request import account
-from request import repo
-
-import asyncio
-
-# get username by token
-user = account.User()
-username = user.get_username()
-print(username)
-# generate flask api
-app = Flask(__name__)
+import router
 
 
-@app.route('/<repository_names>', methods=['POST', 'GET'])
-def repository_info(repository_names):
-    # split repository names
-    repositories = repository_names.split(',')
+def create_app():
+    app = Flask(__name__)
+    app.config['JSON_AS_ASCII'] = False
+    app.register_blueprint(router.bp)
 
-    # get repository information asynchronously
-    result = asyncio.run(repo.get_repositories_info(username, repositories))
-    print(result)
-    return result
+    return app
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    create_app().run()
