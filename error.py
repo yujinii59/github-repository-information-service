@@ -1,5 +1,5 @@
 from werkzeug.exceptions import HTTPException
-from exception.custom_exception import TokenException
+from exception.custom_exception import TokenException, NotExistException
 
 
 def error_handler(app):
@@ -11,3 +11,6 @@ def error_handler(app):
     def handle_token_error(e):
         return e.dev_error_message, e.status_code
 
+    @app.errorhandler(NotExistException)
+    def handle_token_error(e):
+        return e.dev_error_message, e.status_code

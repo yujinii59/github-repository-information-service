@@ -4,6 +4,7 @@ import asyncio
 from typing import List
 
 import common
+from exception.custom_exception import NotExistException
 
 headers = common.github_graphql_header
 
@@ -41,9 +42,7 @@ async def get_repository_info(session, username: str, repo: str):
                 'A list of the 5 most recent issue titles': data['last5Issues']['nodes']
             }
         else:
-            result = json_data
-            return {"error": "repository not found",
-                    "Repository name": repo}
+            raise NotExistException()
         return result
 
 
