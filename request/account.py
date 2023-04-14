@@ -1,12 +1,12 @@
 import json
 import requests
 
-from config import config
+import common
 
 
 class User(object):
     def __init__(self):
-        self.header = {'Authorization': 'bearer ' + config.TOKEN}
+        self.header = common.github_graphql_header
 
     def get_username(self):
         data = {'query': """
