@@ -21,6 +21,6 @@ class User(object):
                                 headers=self.header,
                                 data=json.dumps(data))
 
-        username = request.json()['data']['viewer']['login']
+        username = request.json().get('data', {}).get('viewer', {}).get('login', '')
 
         return username
