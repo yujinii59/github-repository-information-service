@@ -11,11 +11,11 @@ headers = common.github_graphql_header
 
 async def get_repository_info(session, username: str, repo: str) -> Dict[str, str]:
     """
-
+    get repository information using graphQL
     :param session: aiohttp.ClientSession()
     :param username: github login user name
     :param repo: repository name what you want to get information
-    :return:
+    :return: repository information
     """
 
     data = {
@@ -36,6 +36,7 @@ async def get_repository_info(session, username: str, repo: str) -> Dict[str, st
             }}
         """
     }
+
     async with session.post('https://api.github.com/graphql', headers=headers, data=json.dumps(data)) as response:
 
         html = await response.text()
@@ -49,17 +50,20 @@ async def get_repository_info(session, username: str, repo: str) -> Dict[str, st
                 'Number of open issues': data['issueCount']['totalCount'],
                 'A list of the 5 most recent issue titles': data['last5Issues']['nodes']
             }
+
         else:
             # the repository name does not exist
             raise NotExistException()
+
         return result
 
 
 async def get_repositories_info(username: str, names: List[str]):
     """
+    execute get_repository_info function asynchronously
     :param username: github login user name
     :param names: list of repository name
-    :return:
+    :return: list of repository information
     """
     async with aiohttp.ClientSession() as session:
         results = await asyncio.gather(
