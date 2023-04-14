@@ -5,16 +5,17 @@ import asyncio
 from flask import Blueprint
 
 user = account.User()
-username = user.get_username()
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
 
-@bp.route("/api/v1/<repo_list>", methods=['GET','POST'])
+@bp.route("/<repo_list>", methods=['GET','POST'])
 def repository_info(repo_list):
+    username = user.get_username()
+
     # split repository names
     repositories = repo_list.split(',')
 
     # get repository information asynchronously
-    results = asyncio.run(repo.get_repositories_infos(username, repositories))
+    results = asyncio.run(repo.get_repositories_info(username, repositories))
     return results
