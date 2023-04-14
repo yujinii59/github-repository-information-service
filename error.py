@@ -1,13 +1,17 @@
-from werkzeug.exceptions import HTTPException, NotFound
+from werkzeug.exceptions import InternalServerError, NotFound
 from exception.custom_exception import TokenException, NotExistException
 
 
 def error_handler(app):
-
     # access with wrong url
     @app.errorhandler(NotFound)
     def handle_not_found(e):
         return 'This url format is wrong. Insert the url formated : <127.0.0.1:5000/<naming list seperated by comma>', e.code
+
+    # internal error
+    @app.errorhandler(InternalServerError)
+    def handle_sever_error(e):
+        return e.description, e.code
 
     # the access token is wrong or not found
     @app.errorhandler(TokenException)
