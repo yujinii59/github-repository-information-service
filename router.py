@@ -9,7 +9,7 @@ user = account.User()
 bp = Blueprint('main', __name__, url_prefix='/')
 
 
-@bp.route("/<repo_list>", methods=['GET','POST'])
+@bp.route("/<repo_list>", methods=['GET', 'POST'])
 def repository_info(repo_list):
     username = user.get_username()
 

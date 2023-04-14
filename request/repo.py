@@ -1,7 +1,7 @@
 import aiohttp
 import json
 import asyncio
-from typing import List
+from typing import List, Dict
 
 import common
 from exception.custom_exception import NotExistException
@@ -9,7 +9,15 @@ from exception.custom_exception import NotExistException
 headers = common.github_graphql_header
 
 
-async def get_repository_info(session, username: str, repo: str):
+async def get_repository_info(session, username: str, repo: str) -> Dict[str, str]:
+    """
+
+    :param session: aiohttp.ClientSession()
+    :param username: github login user name
+    :param repo: repository name what you want to get information
+    :return:
+    """
+
     data = {
         "query": f"""
             query {{
@@ -42,11 +50,17 @@ async def get_repository_info(session, username: str, repo: str):
                 'A list of the 5 most recent issue titles': data['last5Issues']['nodes']
             }
         else:
+            # the repository name does not exist
             raise NotExistException()
         return result
 
 
 async def get_repositories_info(username: str, names: List[str]):
+    """
+    :param username: github login user name
+    :param names: list of repository name
+    :return:
+    """
     async with aiohttp.ClientSession() as session:
         results = await asyncio.gather(
             *[get_repository_info(session, username, name) for name in names]

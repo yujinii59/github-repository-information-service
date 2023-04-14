@@ -11,8 +11,10 @@ class User(object):
         self.username = ''
 
     def get_username(self):
+        # already got username
         if self.username != '':
             return self.username
+
         data = {'query': """
                         query {
                             viewer {
@@ -26,7 +28,9 @@ class User(object):
                                 data=json.dumps(data))
 
         username = request.json().get('data', {}).get('viewer', {}).get('login', '')
+        self.username = username
 
+        # username can't be obtained
         if username == '':
             raise TokenException()
         return username
