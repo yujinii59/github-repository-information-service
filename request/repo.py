@@ -13,6 +13,7 @@ async def get_repository_info(username, repo):
                 query {{
                     repository(owner: "{username}", name: "{repo}") {{
                         name
+                        description
                     }}
                 }}
             """
