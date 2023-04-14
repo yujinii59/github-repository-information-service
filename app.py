@@ -8,6 +8,7 @@ def create_app():
     app.config['JSON_AS_ASCII'] = False
     app.register_blueprint(router.bp)
     error.error_handler(app)
+
     return app
 
 
