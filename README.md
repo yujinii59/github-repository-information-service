@@ -42,7 +42,13 @@ If you have token, you can use it.
     ```
     
 
-## 3. Run the Flask web framework running ``app.py``
+## 3. Run the Flask web framework running ``app.py`` 
 ```bash
 python ./app.py
+```
+
+## Or Run the aiohttp server running ``aiohttp_web.py``
+
+```bash
+python ./aiohttp_web.py
 ```
